@@ -31,6 +31,11 @@ public class Time{
     }
 
     public static int Compare(Time x, Time y){
+        /*
+        * x < y return 1;
+        * x > y return -1;
+        * x == y return 0;
+        * */
         if(x.year != y.year){
             if(x.year < y.year)
                 return 1;

@@ -40,6 +40,13 @@ public class Food extends Commodity {
         return new Time(yy,mm,dd);
     }
 
+    public boolean isValid(){
+        Time nowTime = get_nowTime();
+        if(Time.Compare(nowTime, out) == 1)
+            return true;
+        return false;
+    }
+
     @Override
     public String toString(){
         String t = "Food name:" + get_name() + "\nPrice:" + get_price() +

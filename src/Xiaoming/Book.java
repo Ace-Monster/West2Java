@@ -24,6 +24,6 @@ public class Book extends Commodity {
     public String toString() {
         String t = "Book name:" + get_name() + "\nPrice:" +
                 get_price() + "\nNumber of pages:" + get_pages() + "\n";
-        return super.toString();
+        return t;
     }
 }
