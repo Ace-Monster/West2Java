@@ -22,8 +22,8 @@ public class Book extends Commodity {
 
     @Override
     public String toString() {
-        String t = "Book name:" + get_name() + "\nPrice:" +
+        String s = "Book name:" + get_name() + "\nPrice:" +
                 get_price() + "\nNumber of pages:" + get_pages() + "\n";
-        return t;
+        return s;
     }
 }

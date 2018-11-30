@@ -21,9 +21,10 @@ public class Shop {
 
     public static void main(String[] args){
         Store store = new Store();
+        System.out.println("いらっしゃい!");
         while (true){
-            System.out.println("Welcome to Xiaoming Shop, selct operator:");
-            System.out.println("1:Add Cpmmodity");
+            System.out.println("\nWelcome to Xiaoming Shop, select operator:");
+            System.out.println("1:Add Commodity");
             System.out.println("2:Buy Commodity");
             System.out.println("3:Exit");
             Scanner IN = new Scanner(System.in);
@@ -49,7 +50,7 @@ public class Shop {
                     }else if(op == 3)
                         break;
                     else
-                        System.out.println("Woring kind");
+                        System.err.println("Wrong kind");
                 }
             }else if(op == 2){
                 String name = get_name();
@@ -57,13 +58,16 @@ public class Shop {
                     if(store.buy(name))
                         System.out.println("Transaction success");
                 }catch (BuyException ex){
-                    System.out.println("Transaction failed");
-                    System.out.println(ex.getMessage());
+                    System.err.println("Transaction failed");
+                    System.err.println(ex.getMessage());
                 }
-            }else if(op == 3)
+            }else if(op == 3) {
+                System.out.println("ありがとうございました、またおこしください!");
+                //混进了两句奇怪的东西？
                 break;
+            }
             else
-                System.out.println("Wrong operator");
+                System.err.println("Wrong operator");
 
         }
     }

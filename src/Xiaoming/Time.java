@@ -55,7 +55,7 @@ public class Time{
 
     @Override
     public String toString(){
-        String t = year + "." + month + "." + day;
-        return t;
+        String s = year + "." + month + "." + day;
+        return s;
     }
 }

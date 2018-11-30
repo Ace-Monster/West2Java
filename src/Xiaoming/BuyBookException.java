@@ -1,11 +1,9 @@
 package Xiaoming;
 
 public class BuyBookException extends BuyException{
-        BuyBookException() {
-            super();
-        }
+    public BuyBookException() { super(); }
 
-        BuyBookException(String s){
+    public BuyBookException(String s){
             super(s);
         }
 }

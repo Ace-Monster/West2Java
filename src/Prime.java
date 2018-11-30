@@ -4,13 +4,11 @@ class toRun implements Runnable{
     /*
     * get the prime from a to b
     * */
-    int a,b;
-    long sum = 0;
-    boolean flag = false;
+    private int a,b;
+    private long sum = 0;
+    private boolean flag = false;
 
-    public toRun() {
-
-    }
+    public toRun() { }
 
     public toRun(int a,int b){
         this.a = a;
@@ -43,8 +41,6 @@ public class Prime {
     public static ArrayList<Thread> p = new ArrayList<Thread>();
 
     public static void main(String[] args) {
-        //long startTime = System.currentTimeMillis();
-
         long sum = 0L;
         int a = 1, b = NUM / x + 1, NUMB = NUM / x;
         for (int i = 1; i <= x; i++, a += NUMB, b += NUMB) {
@@ -66,10 +62,6 @@ public class Prime {
             sum += q.get(i).getSum();
         }
         System.out.println("1 到" + NUM + "内所有素数的和为:" + sum);
-
-        //long endTime = System.currentTimeMillis();
-
-        //System.out.println("程序运行时间：" + (endTime - startTime) + "ms");
     }
 
     public static boolean isPrime(int num) {
@@ -79,7 +71,6 @@ public class Prime {
         for (int i = 2; i <= Math.sqrt(num); i++) {
             if (num % i == 0) {
                 return false;
-
             }
         }
         return true;
