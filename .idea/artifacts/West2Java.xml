@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="West2Java">
+    <output-path>$PROJECT_DIR$/out/artifacts/West2Java</output-path>
+    <root id="archive" name="West2Java.jar">
+      <element id="module-output" name="West2Java" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>
