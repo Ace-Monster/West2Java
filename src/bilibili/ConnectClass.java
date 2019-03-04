@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class Con {
+public class ConnectClass {
 
     static String getAccount() throws FileNotFoundException {
         Scanner ACC = new Scanner(new File("Account.txt"));
@@ -21,7 +21,7 @@ public class Con {
 
     Connection conn;
 
-    public Con() throws ClassNotFoundException, SQLException {
+    public ConnectClass() throws ClassNotFoundException, SQLException {
         String sqlurl = "jdbc:mysql://127.0.0.1:3306/User?characterEncoding=utf8&useSSL=false";
         String Account;
         try{

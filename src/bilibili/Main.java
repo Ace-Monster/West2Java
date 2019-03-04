@@ -5,7 +5,7 @@ import java.sql.Statement;
 
 public class Main {
     static public void main(String argc[]) throws SQLException, ClassNotFoundException {
-        Con MySql = new Con();
+        ConnectClass MySql = new ConnectClass();
 
         Statement st = MySql.conn.createStatement();
 
