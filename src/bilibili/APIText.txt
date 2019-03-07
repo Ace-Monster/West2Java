@@ -1,0 +1,5 @@
+视频信息接口:  https://api.bilibili.com/x/web-interface/view?aid=(AV号)
+视频弹幕接口:  https://api.bilibili.com/x/v1/dm/list.so?oid=(弹幕池编号cid)
+视频评论接口:  https://api.bilibili.com/x/v2/reply?callback=jQuery17209674413220854512_1551807914163&jsonp=jsonp&pn=1&type=1&oid=2&sort=0&_=1551807925940
+//接口太复杂。。。有时间再找找规律
+视频标签接口:  http://api.bilibili.com/x/tag/archive/tags?aid=(AV号)

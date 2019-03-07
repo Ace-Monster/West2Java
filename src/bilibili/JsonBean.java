@@ -6,12 +6,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class JasonBean {
-    JasonBean() { }
+public class JsonBean {
+    JsonBean() { }
+    private int code;
+    private String message;
     private Data data;
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 
     public Data getData() {
         return data;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public void setData(Data data) {
