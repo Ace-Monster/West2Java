@@ -1,76 +1,64 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.SerializedName;
+import bilibili.ConnectClass;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import sun.net.www.http.HttpClient;
+
+
 import java.security.MessageDigest;
 import java.io.*;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-class A{
-    A(){ }
-    A(ResultSet rs) {
-        try {
-            if(!rs.isAfterLast()){
-                System.out.println(rs.getString("name"));
-                rs.next();
-            }else{
-                System.out.println("no");
-            }
-        }catch (SQLException ex){
-            System.out.println("1");
-        }
-    }
+class JsonBean{
+    JsonBean() { }
+    public Data data;
 }
+
+class Data{
+    Data() { }
+    public int aid;
+    public int view;
+}
+
 public class Test {
-    static String getAccount() throws FileNotFoundException {
-        Scanner ACC = new Scanner(new File("Account.txt"));
-        return ACC.next();
-    }
-
-    static String getPassword() throws FileNotFoundException{
-        Scanner PWD = new Scanner(new File("Password.txt"));
-        return PWD.next();
-    }
-
-    static Connection conn;
-    static Statement st;
-
-    static void Con() throws ClassNotFoundException, SQLException {
-        String sqlurl = "jdbc:mysql://127.0.0.1:3306/User?characterEncoding=utf8&useSSL=false";
-        String Account;
-        try{
-            Account = getAccount();
-        }catch (FileNotFoundException tExc){
-            System.out.println("Account.txt is not found");
-            return;
-        }
-        String Password;
-        try{
-            Password = getPassword();
-        } catch (FileNotFoundException tExc){
-            System.out.println("Password.txt is not found");
-            return;
-        }
-        Class.forName("com.mysql.jdbc.Driver");
-        conn = DriverManager.getConnection(sqlurl, Account, Password);
-        st = conn.createStatement();
-        return;
-    }
 
     public static void main(String[] args) {
-        try {
-            Con();
-            ResultSet rs = st.executeQuery("select * from user");
-            rs.next();
-            A a = new A(rs);
-            A b = new A(rs);
-            A c = new A(rs);
-        }catch (ClassNotFoundException e){
-            System.out.println("2");
-        }catch (SQLException x){
-            System.out.println("3");
-        }
-
-        return;
-        /*
+            String doc = "{\n" +
+                    "    \"code\": 0,\n" +
+                    "    \"message\": \"0\",\n" +
+                    "    \"ttl\": 1,\n" +
+                    "    \"data\": {\n" +
+                    "        \"aid\": 2,\n" +
+                    "        \"view\": 728590,\n" +
+                    "        \"danmaku\": 38769,\n" +
+                    "        \"reply\": 36434,\n" +
+                    "        \"favorite\": 20872,\n" +
+                    "        \"coin\": 7764,\n" +
+                    "        \"share\": 3726,\n" +
+                    "        \"like\": 18633,\n" +
+                    "        \"now_rank\": 0,\n" +
+                    "        \"his_rank\": 0,\n" +
+                    "        \"no_reprint\": 0,\n" +
+                    "        \"copyright\": 2,\n" +
+                    "        \"argue_msg\": \"\"\n" +
+                    "    }\n" +
+                    "}";
+            //String doc = Jsoup.connect(url).ignoreContentType(true).get().body().text();
+            Gson gson = new Gson();
+            JsonBean a = gson.fromJson(doc, JsonBean.class);
+            System.out.println("aid="+a.data.aid);
+            System.out.println("view"+a.data.view);
+            /*
         try {
             String x = "https://www.qu.la/book/1/";
             MessageDigest m = MessageDigest.getInstance("MD5");
@@ -87,5 +75,17 @@ public class Test {
         }catch (NoSuchAlgorithmException e){
             System.out.println("2");
         }*/
+
+
+
+
+        //String url = "https://api.bilibili.com/x/v2/reply?callback=jQuery17209674413220854512_1551807914163&jsonp=" +
+        //        "jsonp&pn=1&type=1&oid=2&sort=0&_=1551807925940";//评论接口
+        //String url = "http://interface.bilibili.com/player?id=cid:62131&aid=2";//没搞懂但是好像有用接口
+        //String url = "http://api.bilibili.com/x/tag/archive/tags?aid=2";//标签集合接口
+        //String url = "https://api.bilibili.com/x/web-interface/archive/stat?aid=2";//基础信息接口
+        String url = "https://api.bilibili.com/x/web-interface/view?aid=2";//视频信息接口
+        //String url = "https://api.bilibili.com/x/v1/dm/list.so?oid=62131";//弹幕接口
+        //String doc = Jsoup.connect(url).ignoreContentType(true).execute().body();
     }
 }
