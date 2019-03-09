@@ -42,12 +42,14 @@ class Content{
 public class Test {
 
     public static void main(String[] args) throws IOException{
-        String url = "https://api.bilibili.com/x/v2/reply?callback=jQuery17206946480213122221_1551881927087&jsonp=jsonp" +
-                "&pn=2&type=1&oid=2&sort=0&_=1551982820188";
-        String doc = Jsoup.connect(url).ignoreContentType(true).get().body().text();
-        Gson gson = new Gson();
-        JsonBean A = gson.fromJson(doc, JsonBean.class);
-        System.out.println(A.data.replies.get(0).content.message);
+        String url = "https://api.bilibili.com/x/v1/dm/list.so?oid=19259624";
+        Document doc = Jsoup.connect(url).get();
+        Elements els = doc.getElementsByTag("d");
+        for(int i = 0;i < els.size();i++){
+            System.out.println(els.get(i).text());
+        }
+        //String url = "";
+        //Jsoup.connect(url).get();
             /*
         try {
             String x = "https://www.qu.la/book/1/";

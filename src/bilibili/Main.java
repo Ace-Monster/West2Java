@@ -2,6 +2,8 @@ package bilibili;
 
 import com.google.gson.Gson;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -10,6 +12,36 @@ import java.sql.Statement;
 
 public class Main {
     static ConnectClass MySql;
+
+    static void getDanmaku(JsonBean js, int oid, Statement st){
+        String url = "https://api.bilibili.com/x/v1/dm/list.so?oid="+oid;
+        Document doc;
+        try {
+            doc = Jsoup.connect(url).get();
+        } catch (IOException e) {
+            System.out.println("弹幕抓取失败，目标弹幕池:"+oid);
+            System.out.println("错误信息:"+e.getMessage());
+            return;
+        }
+        Elements els = doc.getElementsByTag("d");
+        try {
+            Thread.sleep(500);//保命措施
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+        for(int i = 0;i < els.size();i++){
+            try{
+                st.execute("insert into Danmaku (aid, cid, danmaku) value ("+
+                        js.getData().getAid()+", "+
+                        oid+", \""+
+                        els.get(i).text()+"\")");
+            }catch (SQLException e){
+                System.out.println("单个弹幕上传失败,弹幕编号:"+i);
+                System.out.println("失败原因:"+e.getMessage());
+            }
+        }
+    }
+
     static boolean getinfo(JsonBean js){
         try {
             Statement st = MySql.conn.createStatement();
@@ -36,11 +68,13 @@ public class Main {
                 id = rs.getInt("max(id)");
             id++;
             for(int i = 0;i < js.getData().getPages().size();i++){
+                int cid = js.getData().getPages().get(i).getCid();
                 st.execute("insert into PageSet (id, aid, page, cid) value (" +
                         (id++)+", " +
                         js.getData().getAid()+", " +
                         js.getData().getPages().get(i).getPage()+", " +
-                        js.getData().getPages().get(i).getCid()+")on duplicate key update aid=values(aid)");
+                        cid+")on duplicate key update id=values(id)");
+                getDanmaku(js, cid, st);//爬取弹幕
             }
             return true;
         }catch (SQLException ex){
@@ -50,16 +84,17 @@ public class Main {
         }
     }
 
-    static public void main(String argc[]) throws SQLException, ClassNotFoundException {
+    static public void main(String argc[]) throws SQLException, ClassNotFoundException, InterruptedException {
         MySql = new ConnectClass();
         Statement st = MySql.conn.createStatement();
         st.execute("use Bilibili");
 
-        int id = 0;
+        int id = 1;
         ResultSet rs = st.executeQuery("select max(aid) from VideoSet");
         if(rs.next())
             id = rs.getInt("max(aid)");
         id++;
+
         while(true) {
             String url = "https://api.bilibili.com/x/web-interface/view?aid="+id;
             String doc;
@@ -81,6 +116,7 @@ public class Main {
                 }
             }
             id++;
+            Thread.sleep(500);//B站爸爸别封我IP
         }
     }
 }

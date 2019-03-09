@@ -3,8 +3,6 @@ package bilibili;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
 
 public class JsonBean {
     JsonBean() { }
