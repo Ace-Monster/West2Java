@@ -21,8 +21,12 @@ public class ConnectClass {
 
     Connection conn;
 
+    public Connection getConn(){
+        return  conn;
+    }
+
     public ConnectClass() throws ClassNotFoundException, SQLException {
-        String sqlurl = "jdbc:mysql://127.0.0.1:3306/User?characterEncoding=utf8&useSSL=false";
+        String sqlurl = "jdbc:mysql://59.77.134.33:3306/User?characterEncoding=utf8&useSSL=false";
         String Account;
         try{
             Account = getAccount();
